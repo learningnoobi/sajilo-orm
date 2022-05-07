@@ -11,6 +11,7 @@ class Team(DamiModel):
 
 
 def main():
+    
     filters = Team.bata.khojera("or",name="PSG",no_players=69)
     print(filters)
 
