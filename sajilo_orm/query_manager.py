@@ -1,6 +1,7 @@
 from sajilo_orm.manager import BaseManager
 
 
+
 class QueryManager(BaseManager):
     cursor = None
     columns = None

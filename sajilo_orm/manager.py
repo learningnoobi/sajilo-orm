@@ -5,6 +5,9 @@ from sajilo_orm.exceptions import TableVetayenaKanchha
 
 
 class BaseManager:
+    '''
+    This is the base manager which has database related function (like executing query )
+    '''
     def _connect_database(self) -> None:
         connection = psycopg2.connect(**DB_SETTINGS)
         self.cursor = connection.cursor()
@@ -15,8 +18,9 @@ class BaseManager:
 
         if not self.cursor.fetchone()[0]:
             db_name = DB_SETTINGS["database"]
-            raise TableVetayenaKanchha(f"Timle deko table '{self.model_class}' {db_name} vanne database ma nai vetayena ! Spelling bigryo ki herata ramro sanga !")
+            raise TableVetayenaKanchha(self.model_class,db_name)
         self.cursor.execute(query)
+
 
     def _return_queryset(self,data):
         result = [r for r in data]

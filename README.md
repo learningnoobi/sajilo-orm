@@ -12,28 +12,32 @@ from sajilo_orm.models import DamiModel
 
 class Team(DamiModel):
     table_ko_naam = "team" #must be same as database table name
-```
 
+```
+##### If there is no such table in database , TableVetayenaKanchha exception will be raised 
 Then you can use query such as :
 
-Get all data 
+##### Get all data 
 
 ```python
+
 Team.bata.sabaideu() #returns list of dictionary
 ```
 
-Filter and Get Data
+##### Filter and Get Data
 
 ```python
  filters = Team.bata.khojera(name="PSG")
 ```
 
-For multiple column filter with 'AND' , add comma 
+
+##### For multiple column filter with 'AND' , add comma 
+
 
 ```python
  filters = Team.bata.khojera(name="PSG" , no_players =20)
 ```
-For 'OR' filter , add an argument with value "or" before writing filter condition
+##### For 'OR' filter , add an argument with value "or" before writing filter condition
 
 ```python
  filters = Team.bata.khojera("or",name="PSG" , no_players =20)
