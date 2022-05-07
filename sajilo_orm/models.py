@@ -6,6 +6,10 @@ class MetaModel(type):
     @property
     def bata(self):
         return QueryManager(model_class=self.table_ko_naam)
+    
+    @property
+    def ma(self):
+        return QueryManager(model_class=self.table_ko_naam)
 
 
 class DamiModel(metaclass=MetaModel):

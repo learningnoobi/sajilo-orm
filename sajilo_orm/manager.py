@@ -9,8 +9,8 @@ class BaseManager:
     This is the base manager which has database related function (like executing query )
     '''
     def _connect_database(self) -> None:
-        connection = psycopg2.connect(**DB_SETTINGS)
-        self.cursor = connection.cursor()
+        self.connection = psycopg2.connect(**DB_SETTINGS)
+        self.cursor = self.connection.cursor()
 
     def _execute_query(self, query) :
         self._connect_database()
@@ -20,6 +20,7 @@ class BaseManager:
             db_name = DB_SETTINGS["database"]
             raise TableVetayenaKanchha(self.model_class,db_name)
         self.cursor.execute(query)
+        self.connection.commit()
 
 
     def _return_queryset(self,data):
