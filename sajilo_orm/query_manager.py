@@ -1,3 +1,4 @@
+from operator import concat
 from sajilo_orm.manager import BaseManager
 
 
@@ -20,7 +21,12 @@ class QueryManager(BaseManager):
         self._execute_query(query)
         data = self.cursor.fetchall()
         return self._return_queryset(data)
-        
+
+    def _give_condition_query(self,con,**condition):
+        condition_query=''
+        for key,value in condition.items(): 
+            condition_query = condition_query+f"{key} = '{value}' {con} " if isinstance(value,str) else condition_query + f"{key} = {value} {con}"
+        return condition_query
     
     def khojera(self, con="and",**condition):
         """ Filters the queryset from the ocondition """
@@ -28,11 +34,7 @@ class QueryManager(BaseManager):
         query = f"""
             SELECT * FROM {self.model_class} 
         """   
-
-        condition_query=''
-        for key,value in condition.items(): 
-            condition_query = condition_query+f"{key} = '{value}' {con} " if isinstance(value,str) else condition_query + f"{key} = {value} {con}"
-            
+        condition_query = self._give_condition_query(con,**condition)
         query +=f"WHERE {condition_query[:-3]};"
         self._execute_query(query)
         data = self.cursor.fetchall()
@@ -51,7 +53,24 @@ class QueryManager(BaseManager):
 
         query = f""" INSERT INTO {self.model_class} ({keys}) values {value_data} """
         self._execute_query(query)
+
         
+    def data_fala(self,con="and",**condition):
+        query = query = f''' 
+            DELETE FROM {self.model_class} 
+        '''
+
+        if len(condition) > 0 :
+            condition_query = self._give_condition_query(con,**condition)
+            query +=f"WHERE {condition_query[:-4]};"
+        self._execute_query(query)
+        
+        
+        
+
+
+
+            
 
      
 

@@ -13,14 +13,12 @@ class Team(DamiModel):
 class League(DamiModel):
     table_ko_naam = "league"
 
+class Players(DamiModel):
+    table_ko_naam = "players"
+
 
 def main():
-    
-    # filters = Team.bata.khojera(name="PsSG",no_players=69)
-    # print(filters)
-    # Team.ma.data_hala(name="Alvi",created_on='1999-05-08',no_players=3)
-    # League.ma.data_hala(name="Alvi")
-    print(League.bata.sabaideu())
+    Players.ma.data_hala(player_name="Prajwal",stats=69,jersey_num=69,team_id=1)
 
 
 if __name__ == "__main__":
