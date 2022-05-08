@@ -1,6 +1,8 @@
 from operator import concat
+from sajilo_orm.exceptions import ColumnNaiXainaKanchha
+import psycopg2
 from sajilo_orm.manager import BaseManager
-
+import psycopg2
 
 
 class QueryManager(BaseManager):
@@ -52,14 +54,17 @@ class QueryManager(BaseManager):
         value_data =value_data_str[:-2]+")" if len(value_data)==1 else value_data_str        
 
         query = f""" INSERT INTO {self.model_class} ({keys}) values {value_data} """
-        self._execute_query(query)
+        try:
+            self._execute_query(query)
+        except psycopg2.errors.UndefinedColumn as e:
+            raise ColumnNaiXainaKanchha(self.model_class)
+            
 
         
     def data_fala(self,con="and",**condition):
         query = query = f''' 
             DELETE FROM {self.model_class} 
         '''
-
         if len(condition) > 0 :
             condition_query = self._give_condition_query(con,**condition)
             query +=f"WHERE {condition_query[:-4]};"

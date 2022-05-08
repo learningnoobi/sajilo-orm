@@ -18,7 +18,7 @@ class Players(DamiModel):
 
 
 def main():
-    Players.ma.data_hala(player_name="Prajwal",stats=69,jersey_num=69,team_id=1)
+    Players.ma.data_hala(player_name="Prajwal",statss=69,jersey_num=69,team_id=1)
 
 
 if __name__ == "__main__":
