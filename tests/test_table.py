@@ -4,9 +4,6 @@ import pytest
 
 #Use test db since we will be dropping every table at first
 
-
-
-
 class Refree(DamiModel):
     table_ko_naam = "refree"
 
@@ -30,7 +27,20 @@ def test_table_banau(cursor):
     assert Refree.bata.check_table_exists() ==True
 
 
+
 def test_table_vetayena(cursor):
     with pytest.raises(TableVetayenaKanchha) as exc_info:   
         Random.bata.sabaideu()
+
+def test_data_hala_ani_sabaideu(cursor):
+    Refree.bata.table_banau()
+    assert Refree.bata.sabaideu() == []    
+    Refree.ma.data_hala(name="bishal",age=21,match_played=69)
+    Refree.ma.data_hala(name="rayon",age=34,match_played=9)
+    b = Refree.bata.sabaideu()
+    assert len(b) == 2
+    assert b[0].__dict__ == {'id':1,'age':21,'match_played':69,'name':'bishal'}
+    
+
+
     

@@ -32,8 +32,8 @@ class BaseManager:
         self.cursor.execute(query)
         self.connection.commit()
 
-    def _return_queryset(self, data):
-        result = [r for r in data]
-        self.cols = [desc[0] for desc in self.cursor.description]
-        queryset = [dict(zip(self.cols, i)) for i in result]
-        return queryset
+    # def _return_queryset(self, data):
+    #     result = [r for r in data]
+    #     self.cols = [desc[0] for desc in self.cursor.description]
+    #     queryset = [dict(zip(self.cols, i)) for i in result]
+    #     return queryset
