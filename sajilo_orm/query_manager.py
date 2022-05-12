@@ -3,26 +3,57 @@ from sajilo_orm.exceptions import ColumnNaiXainaKanchha
 import psycopg2
 from sajilo_orm.manager import BaseManager
 import psycopg2
+from sajilo_orm import (CHECK_TABLE, CREATE_TABLE, SELECT_ALL,INSERT_INTO,DELETE_ALL,UPDATE)
+
+
 
 
 class QueryManager(BaseManager):
-    cursor = None
-
-    def __init__(self, model_class) -> None:
-        self.model_class = model_class
-        self.does_table_exits = f"""select exists(select relname from pg_class 
-                where relname = '{self.model_class}' and relkind='r');"""
+    table_name =None
     
 
-    def sabaideu(self, size=2000):
-        '''Gives all Data of the table'''
+    def __init__(self, model_class) -> None:
+        super().__init__()
+        self.model_class = model_class
+        self.table_name = model_class.table_ko_naam
+        self.does_table_exits =CHECK_TABLE.format(self.table_name)
+    
 
-        query = f"""
-            SELECT * FROM {self.model_class} ;
-        """
+
+    def get_columns(self):
+        import inspect
+        from sajilo_orm.field import Column
+        fields =[
+            ("id","SERIAL PRIMARY KEY")
+        ]
+        for name,field in inspect.getmembers(self.model_class):
+            if isinstance(field,Column):
+                fields.append((name, field._get_sql_type))
+        return fields
+
+    def table_banau(self):
+        self.check_table = False
+        fields = self.get_columns()
+        self.base_q = [' '.join(i) for i in fields]
+        query = CREATE_TABLE.format(self.table_name,' , '.join(self.base_q))
+        self._execute_query(query)
+
+    def give_object_list(self,data):
+        querysets =[]
+        for da in data:
+            b =self.model_class()
+            b.setData(da)
+            querysets.append(b)
+        return querysets
+
+    def sabaideu(self):
+        '''Gives all Data of the table'''
+        
+        query = SELECT_ALL.format(self.table_name) 
         self._execute_query(query)
         data = self.cursor.fetchall()
-        return self._return_queryset(data)
+        return self.give_object_list(data)
+
 
     def _give_condition_query(self,con,**condition):
         condition_query=''
@@ -33,18 +64,17 @@ class QueryManager(BaseManager):
     def khojera(self, con="and",**condition):
         """ Filters the queryset from the ocondition """
 
-        query = f"""
-            SELECT * FROM {self.model_class} 
-        """   
+        query = SELECT_ALL.format(self.table_name)
         condition_query = self._give_condition_query(con,**condition)
         query +=f"WHERE {condition_query[:-3]};"
         self._execute_query(query)
         data = self.cursor.fetchall()
-        return self._return_queryset(data)
-    
+        return self.give_object_list(data)
+            
 
     def data_hala(self,**data):
         ''' Insert Value In Given Table '''
+
         keys,value_data = list(),list()
         for key,value in data.items():
             keys.append(key),value_data.append(value)
@@ -53,35 +83,32 @@ class QueryManager(BaseManager):
         value_data_str=f'{tuple(value_data)}'
         value_data =value_data_str[:-2]+")" if len(value_data)==1 else value_data_str        
 
-        query = f""" INSERT INTO {self.model_class} ({keys}) values {value_data} """
+        query = INSERT_INTO.format(self.table_name,keys,value_data) 
         try:
             self._execute_query(query)
-        except psycopg2.errors.UndefinedColumn as e:
-            raise ColumnNaiXainaKanchha(self.model_class)
+        except psycopg2.errors.UndefinedColumn:
+            raise ColumnNaiXainaKanchha(self.table_name)
             
 
         
     def data_fala(self,con="and",**condition):
-        query = query = f''' 
-            DELETE FROM {self.model_class} 
-        '''
+        query = DELETE_ALL.format(self.table_name)
         if len(condition) > 0 :
             condition_query = self._give_condition_query(con,**condition)
             query +=f"WHERE {condition_query[:-4]};"
-        self._execute_query(query)
+        try:
+            self._execute_query(query)
+        except psycopg2.errors.UndefinedColumn:
+            raise ColumnNaiXainaKanchha(self.table_name)
+    
+    def data_fera(self , **condition):
+        condition_query = self._give_condition_query(',',**condition)
+        print(condition_query)
+
+
         
         
         
 
 
 
-            
-
-     
-
-
-
-# from psycopg2.extras import execute_values
-# execute_values(cur,
-#     "INSERT INTO test (id, v1, v2) VALUES %s",
-#     [(1, 2, 3), (4, 5, 6), (7, 8, 9)])
