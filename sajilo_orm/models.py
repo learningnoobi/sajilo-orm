@@ -28,4 +28,4 @@ class DamiModel(metaclass=MetaModel):
             setattr(self, b, j)
 
     def __repr__(self) -> str:
-        return f"<{self.table_ko_naam} : {self.id} > "
+        return f"<{self.table_ko_naam} : {self.id} >"

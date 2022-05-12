@@ -94,16 +94,16 @@ class QueryManager(BaseManager):
         except psycopg2.errors.UndefinedColumn:
             raise ColumnNaiXainaKanchha(self.table_name)
 
-    def data_fala(self, con="and", **condition):
+    def data_fala(self, con="and ", **condition):
         query = DELETE_ALL.format(self.table_name)
         if len(condition) > 0:
             condition_query = self._give_condition_query(con, **condition)
-            query += f"WHERE {condition_query[:-4]};"
+            query += f"WHERE {condition_query[:-4]} ;"
         try:
             self._execute_query(query)
         except psycopg2.errors.UndefinedColumn:
             raise ColumnNaiXainaKanchha(self.table_name)
 
-    def data_fera(self, **condition):
-        condition_query = self._give_condition_query(",", **condition)
-        print(condition_query)
+    # def data_fera(self, **condition):
+    #     condition_query = self._give_condition_query(",", **condition)
+    #     print(condition_query)
