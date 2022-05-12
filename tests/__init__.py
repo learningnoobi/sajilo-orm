@@ -1,7 +1,7 @@
 from sajilo_orm.models import DamiModel
 from sajilo_orm.field import Column
 from sajilo_orm.manager import BaseManager
-from sajilo_orm.exceptions import DatabaseConnectVayena,TableVetayenaKanchha
+from sajilo_orm.exceptions import *
 import pytest
 
 TEST_DB_SETTINGS = {

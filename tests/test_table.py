@@ -1,5 +1,5 @@
 from sajilo_orm.query_manager import QueryManager
-from tests import Column, cursor, DamiModel, TableVetayenaKanchha
+from tests import Column, cursor, DamiModel, TableVetayenaKanchha,ColumnNaiXainaKanchha
 import pytest
 
 #Use test db since we will be dropping every table at first
@@ -34,12 +34,17 @@ def test_table_vetayena(cursor):
 
 def test_data_hala_ani_sabaideu(cursor):
     Refree.bata.table_banau()
+    
     assert Refree.bata.sabaideu() == []    
     Refree.ma.data_hala(name="bishal",age=21,match_played=69)
     Refree.ma.data_hala(name="rayon",age=34,match_played=9)
     b = Refree.bata.sabaideu()
+
     assert len(b) == 2
     assert b[0].__dict__ == {'id':1,'age':21,'match_played':69,'name':'bishal'}
+
+    with pytest.raises(ColumnNaiXainaKanchha) as e:
+        Refree.ma.data_hala(nama="rayon",umer=34,kheleko=9)   
     
 
 
