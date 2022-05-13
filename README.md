@@ -11,6 +11,13 @@
 - [Check If Table Exists](#check-if-table-exists)
 - [Types of Exception](#types-of-exception)
 
+### Installation
+
+```python
+ pip install sajilo-orm
+```
+
+
 
 ## Connect Database
 
