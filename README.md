@@ -1,5 +1,17 @@
 ## Documentation
 
+#### Table of Contents
+- ##### [Connect Database](#connect-database)
+- ##### [Create Table](#create-table)
+- ##### [QuerySet API](#queryset-api)
+- ##### [Add Data](#add-data)
+-  ##### [Filter And Get Data](#filter-and-get-data)
+-  ##### [Update Data](#update-data)
+-  ##### [Delete Data](#delete-data)
+-  ##### [Check If Table Exists](#check-if-table-exists)
+-  ##### [Types of Exception](#types-of-exception)
+
+
 ## Connect Database
 
 *Postgresql is the only supported Database for now(Feel free contribute to add new database)*
@@ -127,7 +139,7 @@ To delete `data_fala` (lol) is used . Use this wisely .
 
 ```python
    Country.bata.data_fala(id=2)
-   Country.bata.data_fala(name='japan')
+   Country.bata.data_fala(name='japan')`
    Country.bata.data_fala(no_of_provinces=')
 ```
 
@@ -139,3 +151,11 @@ To delete `data_fala` (lol) is used . Use this wisely .
 
 ###### To get the use case of this orm , read the [Test Case Here](https://github.com/learningnoobi/sajilo-orm/blob/main/tests/test_table.py)
 
+
+#### Types of Exeptions
+Below is the list of exception you might get using `sajilo orm`
+- ###### TableVetayenaKanchha  `Database ma nai table navayesi aaune error ! `
+- ###### ColumnNaiXainaKanchha `Table ma nai navako column diyesi aaune error ! `
+- ###### DatabaseConnectVayenaKanchha `Database connection config namilda aaune error !  `
+- ###### IdXainaKanchha `Data ferda id diyena vane aaune error `
+- ###### SyntaxBigryoKanchha `Syntax nai bigrexi aaune error ! `

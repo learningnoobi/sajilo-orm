@@ -1,4 +1,4 @@
-from tests import  BaseManager, TEST_DB_SETTINGS, DatabaseConnectVayena
+from tests import  BaseManager, TEST_DB_SETTINGS, DatabaseConnectVayenaKanchha
 import pytest
 
 
@@ -6,7 +6,7 @@ import pytest
 
 def test_fail_database_connection():
     BaseManager.DB_SETTINGS = {"jpt":"connection"}
-    with pytest.raises(DatabaseConnectVayena) as exc_info:   
+    with pytest.raises(DatabaseConnectVayenaKanchha) as exc_info:   
         BaseManager()
     
     assert "Arrey !! Database ta ramrari connect gara paila !!" in str(exc_info.value)

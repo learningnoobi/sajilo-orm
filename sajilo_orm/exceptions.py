@@ -18,7 +18,7 @@ class ColumnNaiXainaKanchha(Exception):
         super().__init__(Fore.RED + f"Timle deko column Table '{table_name}' ma nai vetayena ! Spelling bigryo ki ramro sanga herata !")
     
 
-class DatabaseConnectVayena(Exception):
+class DatabaseConnectVayenaKanchha(Exception):
     """
     Database connection config namilda aaune error ! 
     """

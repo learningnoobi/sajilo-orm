@@ -1,6 +1,6 @@
 import psycopg2
 # from sajilo_orm.settings import DB_SETTINGS
-from sajilo_orm.exceptions import TableVetayenaKanchha,DatabaseConnectVayena
+from sajilo_orm.exceptions import TableVetayenaKanchha,DatabaseConnectVayenaKanchha
 
 
 class BaseManager:
@@ -17,7 +17,7 @@ class BaseManager:
             self.connection = psycopg2.connect(**self.DB_SETTINGS)
             self.cursor = self.connection.cursor()
         except:
-            raise DatabaseConnectVayena
+            raise DatabaseConnectVayenaKanchha
 
 
 
