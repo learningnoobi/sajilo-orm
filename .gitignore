@@ -1,6 +1,5 @@
 env
 venv
-check.py
 __pycache__/
 *.py[cod]
 
