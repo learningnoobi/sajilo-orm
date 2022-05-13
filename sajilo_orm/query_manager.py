@@ -1,5 +1,5 @@
 from operator import concat
-from sajilo_orm.exceptions import ColumnNaiXainaKanchha
+from sajilo_orm.exceptions import ColumnNaiXainaKanchha, IdXainaKanchha, SyntaxBigryoKanchha
 import psycopg2
 from sajilo_orm.manager import BaseManager
 import psycopg2
@@ -104,6 +104,20 @@ class QueryManager(BaseManager):
         except psycopg2.errors.UndefinedColumn:
             raise ColumnNaiXainaKanchha(self.table_name)
 
-    # def data_fera(self, **condition):
-    #     condition_query = self._give_condition_query(",", **condition)
-    #     print(condition_query)
+    def data_fera(self, **condition):
+        try:
+            pk = condition.pop("id")
+        except KeyError:
+            raise IdXainaKanchha
+        condition_query = self._give_condition_query(",", **condition)[:-2]
+        query = UPDATE.format(self.table_name,condition_query,f'id = {pk}' )
+        try:
+            self._execute_query(query)
+        except psycopg2.errors.UndefinedColumn:
+            raise ColumnNaiXainaKanchha(self.table_name)
+        
+        except psycopg2.errors.SyntaxError: 
+            raise SyntaxBigryoKanchha
+
+
+#  "Update {} set {player_name='XOLOK',trophy_won = 999} where player_id=8;"

@@ -20,7 +20,8 @@ class Refree(DamiModel):
 
 def main():
     b = Refree.bata.khojera(id=1)[0]
-    print(b.__dict__)
+    Refree.bata.data_fera(id=1)
+    # print(b.__dict__)
 
 
 if __name__ == "__main__":
