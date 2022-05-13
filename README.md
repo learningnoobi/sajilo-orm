@@ -1,15 +1,15 @@
 ## Documentation
 
 #### Table of Contents
-- ##### [Connect Database](#connect-database)
-- ##### [Create Table](#create-table)
-- ##### [QuerySet API](#queryset-api)
-- ##### [Add Data](#add-data)
--  ##### [Filter And Get Data](#filter-and-get-data)
--  ##### [Update Data](#update-data)
--  ##### [Delete Data](#delete-data)
--  ##### [Check If Table Exists](#check-if-table-exists)
--  ##### [Types of Exception](#types-of-exception)
+-[Connect Database](#connect-database)
+-[Create Table](#create-table)
+-[QuerySet API](#queryset-api)
+-[Add Data](#add-data)
+- [Filter And Get Data](#filter-and-get-data)
+- [Update Data](#update-data)
+- [Delete Data](#delete-data)
+- [Check If Table Exists](#check-if-table-exists)
+- [Types of Exception](#types-of-exception)
 
 
 ## Connect Database
