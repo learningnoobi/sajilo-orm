@@ -1,10 +1,10 @@
 ## Documentation
 
 #### Table of Contents
--[Connect Database](#connect-database)
--[Create Table](#create-table)
--[QuerySet API](#queryset-api)
--[Add Data](#add-data)
+- [Connect Database](#connect-database)
+- [Create Table](#create-table)
+- [QuerySet API](#queryset-api)
+- [Add Data](#add-data)
 - [Filter And Get Data](#filter-and-get-data)
 - [Update Data](#update-data)
 - [Delete Data](#delete-data)
