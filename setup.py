@@ -7,7 +7,7 @@ README = (BASE_DIR / "README.md").read_text()
 
 setup(
    name='sajilo-orm',
-   version='0.0.3',
+   version='0.0.4',
    description='Sarai Sajilo lightweight ORM inspired by Django ORM with nepali twist',
    long_description=README,
    long_description_content_type="text/markdown",

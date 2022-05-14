@@ -42,3 +42,19 @@ class SyntaxBigryoKanchha(Exception):
     def __init__(self) -> None:
         super().__init__(Fore.RED + f"Query ko syntax bigrye xa . Yedi update garda aako vaye id bahek arko field ni chainxa !!")
     
+class DateFormatMilenaKanchha(Exception):
+    """
+    Date Format nai bigrexi aaune error ! 
+    """
+
+    def __init__(self) -> None:
+        super().__init__(Fore.RED + f"Miti ko format bigrexa . Date Format Yesto Prakar ko Xa Hai (2022-01-01) i.e (year/month/day) !!")
+    
+class NotNullMaDataVayenaKanchha(Exception):
+    """
+    Date Format nai bigrexi aaune error ! 
+    """
+
+    def __init__(self) -> None:
+        super().__init__(Fore.RED + f"Not Null vako column ma data vayena . Data halerw feri try gara !!")
+    

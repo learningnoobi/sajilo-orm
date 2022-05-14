@@ -1,5 +1,5 @@
 from operator import concat
-from sajilo_orm.exceptions import (ColumnNaiXainaKanchha, IdXainaKanchha, SyntaxBigryoKanchha)
+from sajilo_orm.exceptions import (ColumnNaiXainaKanchha, DateFormatMilenaKanchha, IdXainaKanchha, NotNullMaDataVayenaKanchha, SyntaxBigryoKanchha)
 import psycopg2
 from sajilo_orm.manager import BaseManager
 import psycopg2
@@ -38,7 +38,9 @@ class QueryManager(BaseManager):
         fields = self.get_columns()
         self.base_q = [" ".join(i) for i in fields]
         query = CREATE_TABLE.format(self.table_name, " , ".join(self.base_q))
+        # print(query)
         self._execute_query(query)
+        
 
     def give_object_list(self, data):
         querysets = []
@@ -92,8 +94,16 @@ class QueryManager(BaseManager):
         query = INSERT_INTO.format(self.table_name, keys, value_data)
         try:
             self._execute_query(query)
+
         except psycopg2.errors.UndefinedColumn:
             raise ColumnNaiXainaKanchha(self.table_name)
+        
+        except psycopg2.errors.InvalidDatetimeFormat:
+            raise DateFormatMilenaKanchha
+
+        except psycopg2.errors.NotNullViolation: 
+            raise NotNullMaDataVayenaKanchha
+
 
     #delete data
     def data_fala(self, con="and ", **condition):

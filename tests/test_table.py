@@ -6,6 +6,8 @@ from tests import (Column,
         TableVetayenaKanchha,
         ColumnNaiXainaKanchha,
         IdXainaKanchha,
+        NotNullMaDataVayenaKanchha,
+        DateFormatMilenaKanchha,
         SyntaxBigryoKanchha,
         )
 import pytest
@@ -17,8 +19,27 @@ class Refree(DamiModel):
     table_ko_naam = "refree"
 
     name = Column("string", max_length="50")
-    age = Column("integer")
-    match_played = Column("integer")
+    age = Column("anka")
+    whens = Column("miti",default='aja_ko_date')
+    won = Column("ho_ki_haina",default="haina",null=False)
+    match_played = Column("anka")
+
+
+
+# T his Student model is to check field and Column section only
+# basically using all the field with all the case (like null=True,default="example")
+# to ensure every case is working
+class Student(DamiModel):
+    table_ko_naam = "students"
+
+    name = Column("string", max_length="50",default="hero")
+    bio = Column("string", max_length="50",null=False )
+    graduate = Column("ho_ki_haina",default="ho")
+    fail_vako = Column("ho_ki_haina",default="haina")
+    whens = Column("miti",default='aja_ko_date')
+    kaile = Column("miti",default='2000-01-01')
+    match_played = Column("anka",default=69)
+
 
 
 class Random(DamiModel):
@@ -41,14 +62,19 @@ def test_table_vetayena(cursor):
 
 
 def test_crud_operations(cursor):
+    from datetime import date
+
+    today = date.today()
+    # today = today.strftime("%Y-%m-%d")
     Refree.bata.table_banau()
+    Student.bata.table_banau()
 
     # LIST
     assert Refree.bata.sabaideu() == []
 
     # INSERT
-    Refree.ma.data_hala(name="bishal", age=21, match_played=69)
-    Refree.ma.data_hala(name="rayon", age=34, match_played=9)
+    Refree.ma.data_hala(name="bishal", age=21, match_played=69,won=False)
+    Refree.ma.data_hala(name="rayon", age=34, match_played=9,won=True)
     b = Refree.bata.sabaideu()
     assert len(b) == 2
 
@@ -61,14 +87,15 @@ def test_crud_operations(cursor):
     assert filter.age != 23
 
     # RETRIEVE
-    assert b[0].__dict__ == {"id": 1, "age": 21, "match_played": 69, "name": "bishal"}
+    print(b[0].__dict__)
+    assert b[0].__dict__ == {"id": 1, "age": 21, "match_played": 69, "name": "bishal","won":False,"whens":today}
 
     # DELETE
     Refree.bata.data_fala(id=2)
     assert len(Refree.bata.sabaideu()) == 1
 
 
-def test_column_error(cursor):
+def test_exception_error(cursor):
     Refree.bata.table_banau()
     with pytest.raises(ColumnNaiXainaKanchha):
         Refree.ma.data_hala(nama="rayon", umer=34, kheleko=9)
@@ -76,10 +103,18 @@ def test_column_error(cursor):
     with pytest.raises(ColumnNaiXainaKanchha):
         Refree.ma.data_fala(nama="rayon", umer=34, kheleko=9)
 
+    with pytest.raises(NotNullMaDataVayenaKanchha):
+        Refree.bata.data_hala(age=31, match_played=999)
+
+    with pytest.raises(DateFormatMilenaKanchha):
+        Refree.bata.data_hala(name='kagura' ,age=31, match_played=999,whens='12012')
+
+    
+
 
 def test_data_update(cursor):
     Refree.bata.table_banau()
-    Refree.ma.data_hala(name="bishal", age=21, match_played=69)
+    Refree.ma.data_hala(name="bishal", age=21, match_played=69,won=True)
     first_ref = Refree.bata.khojera(id=1)[0]
     
     assert first_ref.id == 1
