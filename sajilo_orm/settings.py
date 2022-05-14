@@ -1,3 +1,4 @@
+#for my dev settings 
 DB_SETTINGS = {
     "database": "firstboi",
     "user": "bishal",

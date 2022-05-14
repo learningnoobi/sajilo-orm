@@ -1,4 +1,10 @@
 ## Documentation
+### Installation
+
+```python
+ pip install sajilo-orm
+```
+
 
 #### Table of Contents
 - [Connect Database](#connect-database)
@@ -10,12 +16,6 @@
 - [Delete Data](#delete-data)
 - [Check If Table Exists](#check-if-table-exists)
 - [Types of Exception](#types-of-exception)
-
-### Installation
-
-```python
- pip install sajilo-orm
-```
 
 
 
@@ -39,7 +39,7 @@ BaseManager.DB_SETTINGS = MY_DB_SETTINGS
 ```
 ### Create Table 
 
-###### To create table , import `DamiModel` from `sajilo_orm.models` and use `Column` class to define column along with datatype 
+###### To create table , import `DamiModel` from `sajilo_orm.models` and use `Column` class to define column along with datatype which is in Nepali
 Note: `id serial primary key` is added automatically when creating table
 
 ```python
@@ -51,11 +51,25 @@ class Country(DamiModel):
     table_ko_naam = "country" # this will be the name of the table created in database
 
     name = Column("string", max_length="50")
-    no_of_province = Column("integer")
-
+    no_of_province = Column("anka")  #number
+    new_year = Column("miti", default='2000-01-01')   #date
+    today = Column("miti", default='aja_ko_date')   #gives CURRENT_DATE
+    ramro = Column("ho_ki_haina" , default="ho")    #boolean
+    data = Column("string", null=False)    #by default null=True
 
 ```
-#####  Ths won't create table yet , To create table use `table banau` method
+Here's what data type type is behind the scene
+```
+sql_type = {
+    "anka":"INT ",
+    "string":"VARCHAR({max_length})
+    "miti":"DATE ",
+    "ho_ki_haina":"BOOLEAN ",
+}
+(string chai nepali ma k rakhne vanera sochirako)
+
+```
+#####  Ths won't create table yet , To create table use `table_banau` method
 
 ```python
     Country.bata.table_banau()
@@ -63,7 +77,7 @@ class Country(DamiModel):
 
 ### QuerySet API
 
-Here's the list of api that you can use for executin query
+Here's the list of api that you can use for executing query
 ##### Get all data 
 
 ```python
@@ -80,8 +94,8 @@ For adding data in the table , use `data_hala` method.
 
 ```python
 
-Country.ma.data_hala(name="nepal",no_of_province= 8) # will update below  
-Country.ma.data_hala(name="japan",no_of_province= 37)  
+Country.ma.data_hala(name="nepal",no_of_province= 8,data="nice country") # will update below  
+Country.ma.data_hala(name="japan",no_of_province= 37,data="nice country")  #default value are added
 
 # Now , if you call sabaideu
 
@@ -110,12 +124,12 @@ For filter , use `khojera` method
 
 
 ```python
- filters = Team.bata.khojera(name="PSG" , no_players =20)
+ filters = Country.bata.khojera(name="nepal" , no_of_province =20)
 ```
 ###### For 'OR' filter , add an argument with value "or" before writing filter condition
 
 ```python
- filters = Team.bata.khojera("or",name="PSG" , no_players =20)
+ filters = Country.bata.khojera("or",name="japan" , no_of_province =20)
 ```
  
 ####  Update Data
@@ -124,12 +138,12 @@ To Update data, we need to add `id` before specifying updating column
 If not id is provided `IdXainaKanchha` exception will be raised
 
 ```python
- Country.bata.data_fera(id=1, name="Nepal", no_of_province=7)
+ Country.bata.data_fera(id=1, name="Nepal", no_of_province=7,new_year='1999-01-01')
  # this will update Country with id 1 and rest will be updated with data provided
  a = country_list[0]
 
- print(a.name,a.no_of_province)
-# Nepal,7
+ print(a.name,a.no_of_province,a.new_year)
+# Nepal,7,1999-01-01
 ```
 ##### Exceptions
 If nothing is provided after id , then `SyntaxBigryoKanchha` exception will be raised
@@ -166,3 +180,5 @@ Below is the list of exception you might get using `sajilo orm`
 - ###### DatabaseConnectVayenaKanchha `Database connection config namilda aaune error !  `
 - ###### IdXainaKanchha `Data ferda id diyena vane aaune error `
 - ###### SyntaxBigryoKanchha `Syntax nai bigrexi aaune error ! `
+- ###### DateFormatMilenaKanchha `Date Format nai bigrexi aaune error ! `
+- ###### NotNullMaDataVayenaKanchha `Not Null ma Data navayesi aaune error !`

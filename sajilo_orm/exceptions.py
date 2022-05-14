@@ -52,7 +52,7 @@ class DateFormatMilenaKanchha(Exception):
     
 class NotNullMaDataVayenaKanchha(Exception):
     """
-    Date Format nai bigrexi aaune error ! 
+    Not Null ma Data navayesi aaune error !
     """
 
     def __init__(self) -> None:
