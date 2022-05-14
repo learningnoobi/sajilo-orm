@@ -1,3 +1,4 @@
+from typing import Type
 from sajilo_orm.query_manager import QueryManager
 from tests import (Column,
         cursor,
@@ -5,7 +6,7 @@ from tests import (Column,
         TableVetayenaKanchha,
         ColumnNaiXainaKanchha,
         IdXainaKanchha,
-        SyntaxBigryoKanchha
+        SyntaxBigryoKanchha,
         )
 import pytest
 
@@ -105,3 +106,17 @@ def test_data_update(cursor):
     
     with pytest.raises(SyntaxBigryoKanchha):
         Refree.bata.data_fera(id=1)
+
+def test_table_fala(cursor):
+    Refree.bata.table_banau()
+    Random.bata.table_banau()
+    assert Refree.bata.check_table_exists() == True
+    Refree.lai.fala()
+    assert Refree.bata.check_table_exists() == False
+    assert Random.bata.check_table_exists() == True
+    Random.lai.fala()
+    assert Random.bata.check_table_exists() == False
+
+
+
+

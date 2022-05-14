@@ -1,5 +1,5 @@
 from operator import concat
-from sajilo_orm.exceptions import ColumnNaiXainaKanchha, IdXainaKanchha, SyntaxBigryoKanchha
+from sajilo_orm.exceptions import (ColumnNaiXainaKanchha, IdXainaKanchha, SyntaxBigryoKanchha)
 import psycopg2
 from sajilo_orm.manager import BaseManager
 import psycopg2
@@ -10,6 +10,7 @@ from sajilo_orm import (
     INSERT_INTO,
     DELETE_ALL,
     UPDATE,
+    DROP_TABLE
 )
 
 
@@ -94,6 +95,7 @@ class QueryManager(BaseManager):
         except psycopg2.errors.UndefinedColumn:
             raise ColumnNaiXainaKanchha(self.table_name)
 
+    #delete data
     def data_fala(self, con="and ", **condition):
         query = DELETE_ALL.format(self.table_name)
         if len(condition) > 0:
@@ -104,6 +106,7 @@ class QueryManager(BaseManager):
         except psycopg2.errors.UndefinedColumn:
             raise ColumnNaiXainaKanchha(self.table_name)
 
+    #update data
     def data_fera(self, **condition):
         try:
             pk = condition.pop("id")
@@ -118,6 +121,12 @@ class QueryManager(BaseManager):
         
         except psycopg2.errors.SyntaxError: 
             raise SyntaxBigryoKanchha
+    
+    #delete table
+    def fala(self):
+        query = DROP_TABLE.format(self.table_name)
+        self._execute_query(query)
+    
 
 
-#  "Update {} set {player_name='XOLOK',trophy_won = 999} where player_id=8;"
+
