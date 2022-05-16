@@ -22,7 +22,7 @@ class Player(DamiModel):
     age = Column("anka",null=True,default=34)
     match_played = Column("miti")
     aja_date = Column("miti",default='aja_ko_date')
-    won = Column("ho_ki_haina",default=True)
+    won = Column("ho_ki_haina",default=True,max_length="34")
 
 
 def main():
@@ -32,33 +32,9 @@ def main():
     # create table
     Player.bata.table_banau()
 
-    
-
-
-
-    
-
-
-
-
-
-
-    # print(b.__dict__)
-
 
 if __name__ == "__main__":
     main()
 
 
-
-
-# Making Python ORM that uses Nepali language (romanized)
-
-# This last week , I decided to make a simple Python BaseM
-# but I wanted to add Nepali based words in it . So I made this simple library called sajilo-orm which allows you to perform simple operations . (Shown below)
-
-# Github: https://lnkd.in/g-Gxy96M
-# Pypi: https://lnkd.in/g4QjxXn5
-
-# #python #github #orm #nepali
 
