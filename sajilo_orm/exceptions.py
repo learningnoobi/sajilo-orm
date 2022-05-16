@@ -58,3 +58,11 @@ class NotNullMaDataVayenaKanchha(Exception):
     def __init__(self) -> None:
         super().__init__(Fore.RED + f"Not Null vako column ma data vayena . Data halerw feri try gara !!")
     
+class MaxLengthVayenaKanchha(Exception):
+    """
+    Not Null ma Data navayesi aaune error !
+    """
+
+    def __init__(self) -> None:
+        super().__init__(Fore.RED + f"String ma max_length compulsary xa kanchha .max_length rakherw feri try garnu hola!!")
+    

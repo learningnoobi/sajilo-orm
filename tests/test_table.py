@@ -9,6 +9,7 @@ from tests import (Column,
         NotNullMaDataVayenaKanchha,
         DateFormatMilenaKanchha,
         SyntaxBigryoKanchha,
+        MaxLengthVayenaKanchha
         )
 import pytest
 
@@ -44,7 +45,11 @@ class Student(DamiModel):
 
 class Random(DamiModel):
     table_ko_naam = "random"
-    name = Column("string", max_length="50")
+    name = Column("string",max_length="34") 
+
+class Boy(DamiModel):
+    table_ko_naam = "random"
+    name = Column("string") #no max_legnth then error must come
 
 
 def test_table_xaina(cursor):
@@ -105,9 +110,14 @@ def test_exception_error(cursor):
 
     with pytest.raises(NotNullMaDataVayenaKanchha):
         Refree.bata.data_hala(age=31, match_played=999)
+        
+    with pytest.raises(MaxLengthVayenaKanchha):
+        Boy.bata.table_banau()
 
     with pytest.raises(DateFormatMilenaKanchha):
         Refree.bata.data_hala(name='kagura' ,age=31, match_played=999,whens='12012')
+
+    
 
     
 

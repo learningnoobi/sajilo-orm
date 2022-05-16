@@ -1,4 +1,7 @@
 
+from sajilo_orm.exceptions import MaxLengthVayenaKanchha
+
+
 sql_type = {
     "anka":"INT {} {}",
     "string":"VARCHAR({}) {} {}",
@@ -49,7 +52,10 @@ class Column:
     def _get_sql_type(self):
         default_val = self.constraint.get("default")
         if self.data_type == "string":
-            MAX =self.constraint["max_length"]
+            MAX =self.constraint.get("max_length")
+            if not MAX:
+                raise MaxLengthVayenaKanchha
+            
 
             if self.constraint["null"] and  not default_val:
                 return sql_type[self.data_type].format(MAX,'','')
