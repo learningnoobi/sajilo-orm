@@ -55,7 +55,7 @@ class Country(DamiModel):
     new_year = Column("miti", default='2000-01-01')   #date
     today = Column("miti", default='aja_ko_date')   #gives CURRENT_DATE
     ramro = Column("ho_ki_haina" , default="ho")    #boolean
-    data = Column("string", null=False)    #by default null=True
+    data = Column("string", null=False,max_length="20")    #by default null=True
 
 ```
 Here's what data type type is behind the scene
