@@ -21,7 +21,7 @@
 
 ## Connect Database
 
-*Postgresql is the only supported Database for now(Feel free contribute to add new database)*
+*Postgresql is the only supported Database for now(Feel free to contribute to add new database)*
 
 ```python
 from sajilo_orm.manager import BaseManager
